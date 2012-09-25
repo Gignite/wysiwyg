@@ -3,6 +3,14 @@ $ = @jQuery or require('jquery')
 class Wysiwyg
   className: 'wysiwyg'
 
+  availableItems:
+    'bold': 'Bold'
+    'italic': 'Italic'
+    'list': 'List'
+    'link': 'Link'
+    'h2': 'Large'
+    'h3': 'Medium'
+
   events:
     'click [data-type=bold]': 'bold'
     'click [data-type=italic]': 'italic'
@@ -25,13 +33,14 @@ class Wysiwyg
     @render()
 
   render: ->
+
+    @items ?= ['bold', 'italic', 'list', 'link', 'h2', 'h3']
+
     @el.empty()
-    @el.append('<a href="#" data-type="bold">Bold</a>')
-    @el.append('<a href="#" data-type="italic">Italic</a>')
-    @el.append('<a href="#" data-type="list">List</a>')
-    @el.append('<a href="#" data-type="link">Link</a>')
-    @el.append('<a href="#" data-type="h2">Large</a>')
-    @el.append('<a href="#" data-type="h3">Medium</a>')
+
+    for item in @items
+      @el.append("<a href=\"#\" data-type=\"#{item}\">#{@availableItems[item]}</a>")
+
     this
 
   bold: (e) ->
